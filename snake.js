@@ -11,28 +11,31 @@ let appleXPos
 let appleYPos
 let snakeWay = []
 let snakeLength = 1
-let widthCanvas = 1000
+let widthCanvas = 600
+let heightCanvas = 400
+let collision = 0
 
 let myFont
 function preload(){
 myFont = loadFont('font.otf')
 }
-let textSnake = ["S","O","L","V","E","I","G","&","E","L","I","O","T","I"]
+let textSnake = ["S","N","A","K","E"]
 let textSnakeNum
 let textSnakeNumMiam = 1
 
 function appleMove(){
-  appleXPos = snakeSize * Math.floor(Math.random() * (windowWidth-snakeSize) / snakeSize) + snakeSize/2;
-  appleYPos = snakeSize * Math.floor(Math.random() * (windowHeight-snakeSize) / snakeSize) + snakeSize/2;
+  appleXPos = snakeSize * Math.floor(Math.random() * (widthCanvas-snakeSize) / snakeSize) + snakeSize/2;
+  appleYPos = snakeSize * Math.floor(Math.random() * (heightCanvas-snakeSize) / snakeSize) + snakeSize/2;
 }
 
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
-    frameRate(20)
+    let canvas = createCanvas(widthCanvas, heightCanvas);
+    canvas.parent("snakeDiv")
+    frameRate(8)
     textFont(myFont)
-    xPos = snakeSize * 10//snakeSize * Math.floor(Math.random() * windowWidth/snakeSize);
-    yPos = snakeSize * 10 //snakeSize * Math.floor(Math.random() * windowHeight/snakeSize);
+    xPos = snakeSize * 10//snakeSize * Math.floor(Math.random() * widthCanvas/snakeSize);
+    yPos = snakeSize * 10 //snakeSize * Math.floor(Math.random() * heightCanvas/snakeSize);
     appleMove()
     textSize(snakeSize)
     textAlign(CENTER)
@@ -41,22 +44,7 @@ function setup() {
   function draw() {
     background(255)
     noStroke()
-    //GRID
-    // stroke(0,0,0,30)
-    // let colNum = windowWidth/snakeSize
-    // let rowNum = windowHeight/snakeSize
-    // for(let row=0;row<rowNum;row++){
-    //   push()
-    //   translate(0,row*snakeSize)
-    //   line(0,0,windowWidth,0)
-    //   pop()
-    // }
-    // for(let col=0;col<colNum;col++){
-    //   push()
-    //   translate(col*snakeSize,0)
-    //   line(0,0,0,windowHeight)
-    //   pop()
-    // }
+    
 
     //MOVE WITH KEYBOARD
     if (keyIsDown(LEFT_ARROW)) {
@@ -87,17 +75,17 @@ function setup() {
 
 
     //SNAKE WALL
-    if (xPos > windowWidth - snakeSize/2){
+    if (xPos > widthCanvas - snakeSize/2){
       xPos =0
     } 
     if (xPos < 0){
-      xPos = Math.floor(windowWidth/snakeSize) * snakeSize
+      xPos = Math.floor(widthCanvas/snakeSize) * snakeSize
     } 
-    if (yPos > windowHeight - snakeSize/2){
+    if (yPos > heightCanvas - snakeSize/2){
       yPos = 0
     } 
     if (yPos < 0){
-      yPos = Math.floor(windowHeight/snakeSize) * snakeSize
+      yPos = Math.floor(heightCanvas/snakeSize) * snakeSize
     } 
 
     //WAY
@@ -134,10 +122,10 @@ function setup() {
         
         if (i==snakeLength && i!=1){
           fill(255)
-          stroke(255,0,0)
+          stroke(0,255,0)
           rect(0, 0, snakeSize,snakeSize)
           noStroke()
-          fill(255,0,0)
+          fill(0,255,0)
         } else if (i==1){
           fill(0)
           stroke(0)
@@ -164,8 +152,12 @@ function setup() {
 
         //COLLISION???
         if (i>2 && snakeWay[snakeWay.length-1].x==snakeLastPositions.x && snakeWay[snakeWay.length-1].y==snakeLastPositions.y){
+          collision +=1
+          //DOM ELEMENT
+          let myCollision = document.querySelector("#collision")
+          myCollision.innerText = collision
           // console.log("COLLISTION!!!")
-          // text('GAME OVER', windowWidth/2, 150)
+          // text('GAME OVER', widthCanvas/2, 150)
           // xSpeed = 0
           // ySpeed = 0
           // noLoop()
@@ -175,6 +167,10 @@ function setup() {
       // MIAM MIAM
       if (snakeWay[snakeWay.length-1].x==appleXPos- snakeSize/2 && snakeWay[snakeWay.length-1].y==appleYPos- snakeSize/2){
         snakeLength +=1
+        //DOM ELEMENT
+        let myScore = document.querySelector("#score")
+        myScore.innerText = snakeLength
+
         appleMove()
         console.log("Miam Miam")
         textSnakeNumMiam+=1
@@ -183,13 +179,13 @@ function setup() {
         }
       }      
     }
-    //text(snakeLength, windowWidth/2, 50)
+    //text(snakeLength, widthCanvas/2, 50)
 
 
 
     //APPLE
     noStroke()
-    fill(255,0,0)
+    fill(0,255,0)
     rect(appleXPos - snakeSize/2,appleYPos - snakeSize/2,snakeSize,snakeSize)
     fill(255)
     text(textSnake[textSnakeNumMiam], appleXPos, appleYPos + snakeSize/2.7)
