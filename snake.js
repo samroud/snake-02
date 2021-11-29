@@ -1,4 +1,4 @@
-let snakeSize = 5
+let snakeSize = 30
 let xPos
 let yPos
 let xSpeed = -snakeSize
