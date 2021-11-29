@@ -12,7 +12,7 @@ let appleYPos
 let snakeWay = []
 let snakeLength = 1
 let widthCanvas = 600
-let heightCanvas = 320
+let heightCanvas = 420
 let collision = 0
 
 let myFont
