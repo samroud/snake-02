@@ -15,7 +15,7 @@ let widthCanvas = 1000
 
 let myFont
 function preload(){
-  myFont = loadFont('Capital-SemiBold.otf')
+myFont = loadFont('font.otf')
 }
 let textSnake = ["S","O","L","V","E","I","G","&","E","L","I","O","T","I"]
 let textSnakeNum
