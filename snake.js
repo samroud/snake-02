@@ -88,6 +88,10 @@ function setup() {
       yPos = Math.floor(heightCanvas/snakeSize) * snakeSize
     } 
 
+     //DOM ELEMENT
+     let domPositions = document.querySelector("#positions")
+     domPositions.innerText = "x: "+xPos +" y: "+yPos
+
     //WAY
     snakeWay.push({
       x: xPos, 
@@ -149,6 +153,8 @@ function setup() {
            textSnakeNum += 1 
         }
         pop()
+
+ 
 
         //COLLISION???
         if (i>2 && snakeWay[snakeWay.length-1].x==snakeLastPositions.x && snakeWay[snakeWay.length-1].y==snakeLastPositions.y){
